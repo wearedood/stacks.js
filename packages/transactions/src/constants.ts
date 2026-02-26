@@ -217,27 +217,19 @@ export enum TenureChangeCause {
 }
 
 export enum AuthFieldType {
-  PublicKeyCompressed = 0x00,
-  PublicKeyUncompressed = 0x01,
-  SignatureCompressed = 0x02,
-  SignatureUncompressed = 0x03,
-}
-
-// todo: refactor this, if only used in one place, just use a string
-/** @ignore */
-export enum TxRejectedReason {
-  Serialization = 'Serialization',
-  Deserialization = 'Deserialization',
-  SignatureValidation = 'SignatureValidation',
-  FeeTooLow = 'FeeTooLow',
-  BadNonce = 'BadNonce',
+NoSuchPublicFunction = 'NoSuchPublicFunction',
   NotEnoughFunds = 'NotEnoughFunds',
-  NoSuchContract = 'NoSuchContract',
-  NoSuchPublicFunction = 'NoSuchPublicFunction',
-  BadFunctionArgument = 'BadFunctionArgument',
+  NoSuchPrincipal = 'NoSuchPrincipal',
+  CircuitBreakerOpen = 'CircuitBreakerOpen',
   ContractAlreadyExists = 'ContractAlreadyExists',
-  PoisonMicroblocksDoNotConflict = 'PoisonMicroblocksDoNotConflict',
-  PoisonMicroblockHasUnknownPubKeyHash = 'PoisonMicroblockHasUnknownPubKeyHash',
+  ContractAlreadyAborted = 'ContractAlreadyAborted',
+  NoSuchContract = 'NoSuchContract',
+  NoSuchAsset = 'NoSuchAsset',
+  BadNonce = 'BadNonce',
+  ConflictingNonceInMempool = 'ConflictingNonceInMempool',
+  FeeTooLow = 'FeeTooLow',
+  NotEnoughTokenBalance = 'NotEnoughTokenBalance',
+  DuplicateTransaction = 'DuplicateTransaction',
   PoisonMicroblockIsInvalid = 'PoisonMicroblockIsInvalid',
   BadAddressVersionByte = 'BadAddressVersionByte',
   NoCoinbaseViaMempool = 'NoCoinbaseViaMempool',
