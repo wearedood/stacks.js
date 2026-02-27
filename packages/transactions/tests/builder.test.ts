@@ -1930,6 +1930,9 @@ test('Transaction broadcast returns error', async () => {
 
   const result = await broadcastTransaction({ transaction });
   expect((result as TxBroadcastResultRejected).reason).toEqual(TxRejectedReason.BadNonce);
+  expect(
+      (result as TxBroadcastResultRejected).reason
+    ).toEqual(TxRejectedReason.ConflictingNonceInMempool);
   expect((result as BadNonceRejection).reason_data).toEqual(rejection.reason_data);
 });
 
