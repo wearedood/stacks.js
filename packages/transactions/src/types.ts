@@ -156,7 +156,10 @@ export type ServerRejectedRejection = {
   reason: 'ServerRejected';
   reason_data: any;
 } & BaseRejection;
-
+export type NotEnoughTokenBalanceRejection = {
+  reason: 'NotEnoughTokenBalance';
+  reason_data: any;
+} & BaseRejection;
 export type TxBroadcastResultRejected =
   | SerializationRejection
   | DeserializationRejection
@@ -164,6 +167,7 @@ export type TxBroadcastResultRejected =
   | BadNonceRejection
   | FeeTooLowRejection
   | NotEnoughFundsRejection
+  | NotEnoughTokenBalanceRejection
   | NoSuchContractRejection
   | ConflictingNonceInMempoolRejection
   | ServerRejectedRejection
@@ -178,7 +182,6 @@ export type TxBroadcastResultRejected =
   | ServerFailureNoSuchChainTipRejection
   | ServerFailureDatabaseRejection
   | ServerFailureOtherRejection;
-
 export type TxBroadcastResult = TxBroadcastResultOk | TxBroadcastResultRejected;
 
 export interface FeeEstimation {
