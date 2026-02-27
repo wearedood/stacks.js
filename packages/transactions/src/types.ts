@@ -51,6 +51,18 @@ export type BadNonceRejection = {
     is_origin: boolean;
     principal: boolean;
   };
+  export type ConflictingNonceInMempoolRejection = {
+  reason: 'ConflictingNonceInMempool';
+  reason_data: {
+    expected: number;
+    actual: number;
+  };
+};
+
+export type ServerRejectedRejection = {
+  reason: 'ServerRejected';
+  reason_data: any;
+};
 } & BaseRejection;
 
 export type FeeTooLowRejection = {
@@ -132,6 +144,18 @@ export type ServerFailureOtherRejection = {
 export type TxBroadcastResultOk = {
   txid: string;
 };
+export type ConflictingNonceInMempoolRejection = {
+  reason: 'ConflictingNonceInMempool';
+  reason_data: {
+    expected: number;
+    actual: number;
+  };
+} & BaseRejection;
+
+export type ServerRejectedRejection = {
+  reason: 'ServerRejected';
+  reason_data: any;
+} & BaseRejection;
 
 export type TxBroadcastResultRejected =
   | SerializationRejection
@@ -141,6 +165,8 @@ export type TxBroadcastResultRejected =
   | FeeTooLowRejection
   | NotEnoughFundsRejection
   | NoSuchContractRejection
+  | ConflictingNonceInMempoolRejection
+  | ServerRejectedRejection
   | NoSuchPublicFunctionRejection
   | BadFunctionArgumentRejection
   | ContractAlreadyExistsRejection
