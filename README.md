@@ -77,3 +77,10 @@ Join our community and stay connected with the latest updates and discussions:
 ## License
 
 Stacks.js is open source and released under the MIT License.
+
+## Troubleshooting
+
+### Common Broadcast Errors
+
+- **ConflictingNonceInMempool**: This occurs when a transaction with the same nonce is already in the mempool.
+- **ServerRejected**: The node rejected the transaction for reasons not specified in the standard enums.
