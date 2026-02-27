@@ -160,6 +160,10 @@ export type NotEnoughTokenBalanceRejection = {
   reason: 'NotEnoughTokenBalance';
   reason_data: any;
 } & BaseRejection;
+export type PostConditionFailedRejection = {
+  reason: 'PostConditionFailed';
+  reason_data: any;
+} & BaseRejection;
 export type TxBroadcastResultRejected =
   | SerializationRejection
   | DeserializationRejection
@@ -168,6 +172,7 @@ export type TxBroadcastResultRejected =
   | FeeTooLowRejection
   | NotEnoughFundsRejection
   | NotEnoughTokenBalanceRejection
+  | PostConditionFailedRejection
   | NoSuchContractRejection
   | ConflictingNonceInMempoolRejection
   | ServerRejectedRejection
