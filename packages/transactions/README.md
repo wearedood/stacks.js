@@ -56,6 +56,22 @@ const serializedTxHex = bytesToHex(serializedTx); // hex string
 const broadcastResponse = await broadcastTransaction(transaction);
 const txId = broadcastResponse.txid;
 ```
+### Handling Broadcast Errors
+
+With the new type guards, handling specific rejection reasons is now easier:
+
+```typescript
+import { isPostConditionFailed, isConflictingNonceInMempool } from '@stacks/transactions';
+
+const result = await broadcastTransaction(tx);
+
+if ('error' in result) {
+  if (isPostConditionFailed(result)) {
+    console.error('Check your post-conditions!');
+  } else if (isConflictingNonceInMempool(result)) {
+    console.error('A similar transaction is already waiting. Increase nonce?');
+  }
+}
 
 ## Smart Contract Deploy Transaction
 
