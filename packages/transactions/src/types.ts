@@ -225,3 +225,33 @@ export type ReadOnlyFunctionOptions = {
   /** address of the sender */
   senderAddress: string;
 } & NetworkClientParam;
+
+/**
+ * Type guard for NotEnoughFunds error.
+ */
+export const isNotEnoughFunds = (result: TxBroadcastResult): result is NotEnoughFundsRejection =>
+  'reason' in result && result.reason === 'NotEnoughFunds';
+
+/**
+ * Type guard for NotEnoughTokenBalance error.
+ */
+export const isNotEnoughTokenBalance = (result: TxBroadcastResult): result is NotEnoughTokenBalanceRejection =>
+  'reason' in result && result.reason === 'NotEnoughTokenBalance';
+
+/**
+ * Type guard for BadNonce error.
+ */
+export const isBadNonce = (result: TxBroadcastResult): result is BadNonceRejection =>
+  'reason' in result && result.reason === 'BadNonce';
+
+/**
+ * Type guard for FeeTooLow error.
+ */
+export const isFeeTooLow = (result: TxBroadcastResult): result is FeeTooLowRejection =>
+  'reason' in result && result.reason === 'FeeTooLow';
+
+/**
+ * Type guard for ServerRejected error.
+ */
+export const isServerRejected = (result: TxBroadcastResult): result is ServerRejectedRejection =>
+  'reason' in result && result.reason === 'ServerRejected';
