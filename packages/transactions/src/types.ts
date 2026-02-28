@@ -144,6 +144,9 @@ export type ServerFailureOtherRejection = {
 export type TxBroadcastResultOk = {
   txid: string;
 };
+/**
+ * Error returned when a transaction with the same nonce is already in the mempool.
+ */
 export type ConflictingNonceInMempoolRejection = {
   reason: 'ConflictingNonceInMempool';
   reason_data: {
@@ -152,18 +155,30 @@ export type ConflictingNonceInMempoolRejection = {
   };
 } & BaseRejection;
 
+/**
+ * Error returned when the server rejects the transaction for an unspecified reason.
+ */
 export type ServerRejectedRejection = {
   reason: 'ServerRejected';
   reason_data: any;
 } & BaseRejection;
+
+/**
+ * Error returned when the user doesn't have enough token balance for the transfer.
+ */
 export type NotEnoughTokenBalanceRejection = {
   reason: 'NotEnoughTokenBalance';
   reason_data: any;
 } & BaseRejection;
+
+/**
+ * Error returned when a post-condition check fails during broadcast.
+ */
 export type PostConditionFailedRejection = {
   reason: 'PostConditionFailed';
   reason_data: any;
 } & BaseRejection;
+
 export type TxBroadcastResultRejected =
   | SerializationRejection
   | DeserializationRejection
@@ -187,70 +202,20 @@ export type TxBroadcastResultRejected =
   | ServerFailureNoSuchChainTipRejection
   | ServerFailureDatabaseRejection
   | ServerFailureOtherRejection;
+
 export type TxBroadcastResult = TxBroadcastResultOk | TxBroadcastResultRejected;
 
-export interface FeeEstimation {
-  fee: number;
-  fee_rate: number;
-}
-
-export interface FeeEstimateResponse {
-  cost_scalar_change_by_byte: bigint;
-  estimated_cost: {
-    read_count: bigint;
-    read_length: bigint;
-    runtime: bigint;
-    write_count: bigint;
-    write_length: bigint;
-  };
-  estimated_cost_scalar: bigint;
-  estimations: [FeeEstimation, FeeEstimation, FeeEstimation];
-}
-
 /**
- * Read only function options
- *
- * @param {String} contractAddress - the c32check address of the contract
- * @param {String} contractName - the contract name
- * @param {String} functionName - name of the function to be called
- * @param {[ClarityValue]} functionArgs - an array of Clarity values as arguments to the function call
- * @param {StacksNetwork} network - the Stacks blockchain network this transaction is destined for
- * @param {String} senderAddress - the c32check address of the sender
+ * Helper to check if a result is a PostConditionFailed error.
  */
-export type ReadOnlyFunctionOptions = {
-  contractName: string;
-  contractAddress: string;
-  functionName: string;
-  functionArgs: ClarityValue[];
-  /** address of the sender */
-  senderAddress: string;
-} & NetworkClientParam;
+export const isPostConditionFailed = (result: TxBroadcastResult): result is PostConditionFailedRejection =>
+  'reason' in result && result.reason === 'PostConditionFailed';
 
 /**
- * Type guard for NotEnoughFunds error.
+ * Helper to check if a result is a ConflictingNonceInMempool error.
  */
-export const isNotEnoughFunds = (result: TxBroadcastResult): result is NotEnoughFundsRejection =>
-  'reason' in result && result.reason === 'NotEnoughFunds';
-
-/**
- * Type guard for NotEnoughTokenBalance error.
- */
-export const isNotEnoughTokenBalance = (result: TxBroadcastResult): result is NotEnoughTokenBalanceRejection =>
-  'reason' in result && result.reason === 'NotEnoughTokenBalance';
-
-/**
- * Type guard for BadNonce error.
- */
-export const isBadNonce = (result: TxBroadcastResult): result is BadNonceRejection =>
-  'reason' in result && result.reason === 'BadNonce';
-
-/**
- * Type guard for FeeTooLow error.
- */
-export const isFeeTooLow = (result: TxBroadcastResult): result is FeeTooLowRejection =>
-  'reason' in result && result.reason === 'FeeTooLow';
-
-/**
+export const isConflictingNonceInMempool = (result: TxBroadcastResult): result is ConflictingNonceInMempoolRejection =>
+  'reason' in result && result.reason === 'ConflictingNonceInMempool';
  * Type guard for ServerRejected error.
  */
 export const isServerRejected = (result: TxBroadcastResult): result is ServerRejectedRejection =>
